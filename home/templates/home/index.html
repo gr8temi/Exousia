@@ -1,0 +1,59 @@
+{% load static from staticfiles%}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="{% static 'asset/css/bootstrap.min.css' %}">
+</head>
+<body>
+	{% if user.is_authenticated%}
+		<p>Welcome {{user.username}}</p>
+		<a href="{% url 'logout' %}"><button>Logout</button></a>
+
+	{%else%}
+
+<div class="container">
+    <div class="row" style="margin-top: 6%">
+         <button class="btn btn-info pull-right">
+            {% with totail_items=cart|length %}
+                {% if cart|length > 0 %}
+                    My Shopping Order:
+                    <a href="{% url 'cart:cart_detail' %}" style="color: #ffffff">
+                        {{ totail_items }} item {{ totail_items|pluralize }}, naira. {{ cart.get_total_price }}
+                    </a>
+                    {% else %}
+                    Your cart is empty.
+                {% endif %}
+            {% endwith %}
+         </button>
+    </div>
+</div>
+
+
+
+		<a href="{% url 'login' %}"><button>Login</button></a>
+		<a href="{% url 'register' %}"><button>Sign Up</button></a>
+	{%endif%}
+	<h1>Categories</h1>
+	{% for cat in cate %}
+	<h2>{{cat.catname}}</h2>
+		<a href="{% url 'Home:category' pk=cat.pk  %}"><img width=10% height=10% src="{{cat.catImage.url}}" alt="IMG-PRODUCT"></a>
+	{% endfor %}
+
+	<h1>Brands</h1>
+	{% for brands in brand %}
+	<h2>{{brands.brand_name}}</h2>
+		<img width=10% height=10% src="{{brands.brand_logo.url}}" alt="IMG-PRODUCT">
+	{% endfor %}
+
+	<h1>Products</h1>
+	{% for product in prod %}
+		<a href="{% url 'Home:detail' product.pk %}"><h2>{{product.prodname}}</h2></a>
+		<img width=30% height=30% src="{{product.prod_image.url}}" alt="IMG-PRODUCT">
+		<a href=""><p>Brand: {{product.brand}}</p></a>
+		<a href=""><p>Gender: {{product.gender}}</p></a>
+	{% endfor %}
+
+</body>
+<script type="text/javascript" src="{% static 'asset/js/bootstrap.min.js' %}"></script>
+</html>
