@@ -6,13 +6,76 @@
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
-<body>
-<h2>Sign Up</h2>
+<body style="background-color: #cccccc">
+<div class="container">
+    <br>
+    <div class="row">
+      <div class="col-md-5"></div>
+       <div class="col-md-2">
+          <img class="" src="{%static 'img/exousia 1.png' %}" width="160px" >
+      </div>
+    <div class="col-md-5"></div>
+ </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+              
+            </div>
+            
+            <div class="col-md-6">
+          <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-8 col-xs-12 signin" style="background-color:#ffad60; border-radius:10px;">
+                
+               <center><p style="margin-bottom:20px;" id="signupt">SIGN UP</p></center> 
+                <form method="post">
+                	{% csrf_token %}
+                        <div class="form-group">
+                          {{form|crispy}}
+                        </div>
+                        <!--<div   class="form-check">
+                          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                          <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                        </div>-->
+                        
+                        <center><button type="submit" class="btn btn-danger" style="width
+                        :80%">Submit</button></center>
+                </form>
+               <center><div  class="passwordreset">Already have an account?<a href="{% url 'login' %}">Sign In</a></div></center>
+ <!--                <a href="{% url 'login' %}"><center><div  class="passwordreset">Dont have an Account?</div></center></a>  
+                <center><div style="font-weight:900; margin-top:10px;" class="orset"> OR</div></center>
+                <center><div style="font-weight:900; margin-top:10px;" class="orset"> SIGN IN WITH...</div></center>
+           <center> <div style="margin-top:10px; padding: 10px;" class="buttons">
+                <a href="{% url 'social:begin' 'facebook' %}"><button type="button" class="btn btn-default" style="font-weight:bold;"><img src="{% static 'img/facebook1.png' %}">FACEBOOK</button></a>
+                <a href=""><button type="button" class="btn btn-default" style="font-weight:bold;"><img src="{% static 'img/twitter.png' %}">TWITTER</button></a>
+                <a href="{% url 'social:begin' 'google-oauth2' %}"><button type="button" class="btn btn-default" style="font-weight:bold;"><img src="{% static 'img/search.png' %}">GOOGLE</button></a>
+
+               </div>
+           </center> --> </div>
+              
+              <div class="col-md-2"></div>
+          </div>
+    
+              </div>
+    
+              <div class="col-md-3">
+                  <div class="col-md-12">
+        
+                  </div>
+                </div>
+            
+        
+    </div>
+</div>
+</div>
+
+</body>
+</html>
+
+<!--<h2>Sign Up</h2>
 
   <form method="post" action="">
     {% csrf_token %}
     {{ form|crispy }}
-    <button type="submit">Sign Up</button>
-  </form>
-</body>
-</html>
+    <button type="submit">Sign Up</button> 
+  </form>-->

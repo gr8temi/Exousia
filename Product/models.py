@@ -19,7 +19,8 @@ class size(models.Model):
 class categories(models.Model):
 	categories = models.CharField(max_length=20, null=True)
 	catname = models.CharField(max_length=20)
-	catImage = models.ImageField(upload_to='efe/', default='me.png')
+	catImage = models.ImageField(upload_to='category', default='me.png')
+	shelve = models.ImageField(upload_to='category/shelve', default='me.png')
 	slug = models.SlugField(max_length=200,unique=True)
 	# product = models.ManyToManyField(Product)
 	def publish(self, *args, **kwargs):
@@ -29,25 +30,41 @@ class categories(models.Model):
 	def __str__(self):
 		return self.catname	
 
+# class subCat(models.Model):
+# 	sub_cat = models.CharField(max_length=20, null=True)
+# 	subCatName = models.CharField(max_length=20)
+# 	slug = models.SlugField(max_length=200,unique=True)
+# 	# product = models.ManyToManyField(Product)
+# 	def publish(self, *args, **kwargs):
+# 		self.slug = slugify(self.sub_cat)
+# 		super(subCat,self).save(*args, **kwargs)
+
+# 	def __str__(self):
+# 		return self.sub_cat	
+
 class brand(models.Model):
 	"""
 	Description: Model Description
 	"""
 	brand_name= models.CharField(max_length=20)
 	brand_logo= models.ImageField(upload_to='media/product/brands')
+	brand_image = models.ImageField(upload_to='media/product/brands', default='me.png')
 	def publish(self):
 		self.save()
 
 	def __str__(self):
 		return self.brand_name
 
-class gender(models.Model):
+class Gender(models.Model):
 	"""
 	Description: Model Description
 	"""
 	gender= models.CharField(max_length=10)
 	tags= models.CharField(max_length=1)
-
+	gender_image = models.ImageField(upload_to='gender', default='default.png')
+	description=models.TextField(default='gender')
+	category= models.ManyToManyField(categories, blank=True)
+	
 	def publish(self):
 		self.save()
 
@@ -63,6 +80,7 @@ class Product(models.Model):
 	rearImage= models.ImageField(upload_to='image/products/', default='default.png', blank=True)
 	frontImage= models.ImageField(upload_to='image/products/', default='default.png', blank=True)
 	categories = models.ForeignKey(categories, on_delete=models.DO_NOTHING, blank=True, default=1)
+	# sub_cat = models.ForeignKey(subCat, on_delete=models.DO_NOTHING, blank=True, default=1)
 	prodname = models.CharField(max_length=30, help_text='max of 30 characters')
 	price = models.FloatField()
 	sizes = models.ManyToManyField(size)
@@ -74,7 +92,7 @@ class Product(models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 	material = models.CharField(max_length=10)
 	brand= models.ForeignKey(brand, on_delete=models.DO_NOTHING)
-	gender= models.ForeignKey(gender,on_delete=models.DO_NOTHING, default=1)
+	gender= models.ForeignKey(Gender,on_delete=models.DO_NOTHING, default=1)
 
 	def publish(self):
 		self.save()

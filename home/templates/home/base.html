@@ -1,0 +1,166 @@
+{% load static from staticfiles%}
+<!DOCTYPE html>
+<html>
+  <head>
+       <title>Exousia</title>
+       <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+  <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>    
+   </head> 
+  
+
+  <body style="padding-top:50px;">
+  <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container" >
+        <div class="navbar-header">
+          <div class="nav navbar-brand">
+           <a href="{% url 'Home:index' %}"><img src="{% static 'img/exousia 1.png' %}" style="width: 120px; height:50px;"></a>           
+          </div>
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>              
+          </button>   
+        </div> 
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="">Home</a></li>
+              {% for gen in gender%}  
+              <li>                
+                <a href="{% url 'Home:Gender' pk=gen.pk  %}">{{gen.gender}}</a>
+              </li>
+              {% endfor %}
+             <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="">Supplement<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Brand</a></li>
+                  <li><a href="#">kilo</a></li>
+                  <li><a href="#">seed</a></li>
+                </ul>
+             </li>
+             <li>
+             <form class="navbar-form" action="">
+                    <div class="input-group img-responsive" >
+                      <input type="text" class="form-control col-xs-12" placeholder="Search" name="search">
+                        <div class="input-group-btn">
+                          <button class="btn btn-danger" type="submit">
+                            <i class="glyphicon glyphicon-search"></i>
+                          </button> 
+                        </div>
+                    </div>
+                </form></li> 
+            </ul>
+              <form class="navbar-form navbar-right">
+                <center><div class="input-group">
+                  <div class=" pull-right">
+                    {% with totail_items=cart|length %}
+                        {% if cart|length > 0 %}
+                            <a href="{% url 'cart:cart_detail' %}" class="quick-btn" >
+                                <!--{{ totail_items }} item {{ totail_items|pluralize }}, naira. {{ cart.get_total_price }}-->
+                                <img width="30px" height="30px" src="{% static 'img/basket-2.png' %}"><span class="label label-danger">{{ totail_items }}</span>
+
+                                
+                            </a>
+                            {% else %}
+                            <a href="{% url 'cart:cart_detail' %}"><img width="30px" height="30px" src="{% static 'img/basket-2.png' %}"></a>
+                        {% endif %}
+                    {% endwith %}
+                 </div>
+                </div></center>
+              </form>
+{% if user.is_authenticated%}
+      <form class="navbar-form navbar-right">
+        <center><div class="input-group">
+      <p>Welcome {{user.username}} <a href="{% url 'logout' %}"><button type="button" class="btn btn-danger">Logout</button></a></p>
+      </div></center>
+      </form>
+   {%else%}
+  <form class="navbar-form navbar-right">
+      <center><div class="input-group">
+       <a href="{% url 'register' %}"><button type="button" class="btn btn-danger">
+         Register
+        </button></a>
+        <a class="text-danger" href="{% url 'login' %}">Login</a> 
+      </div></center>
+    </form>
+    {% endif %}
+                
+          </div>       
+      </div>   
+</div>
+
+                {% block content%}
+
+                {%endblock%}
+
+<div id="footer" class="container-fluid">
+    <div class="footerWrap ">
+      <div id="footer1">
+        Thank you for chosen us
+      </div>
+    </div>
+    <div class="lookWrap">
+      <div id="look">
+        
+        <div class="section">
+          <h3>Support</h3>
+          <a href="#">FAQs</a>
+          <a href="#">Contact Us</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Shipping Information</a>
+          <a href="#">Return Policy</a>
+          <a href="#">Item Exchange</a>
+          <a href="#">Cash Back Rewards</a>
+        </div>
+        <div class="section">
+          <h3>Give & Take</h3>
+          <a href="#">Gift Certificates</a>
+          <a href="#">Wishlist</a>
+          <a href="#">Gift Ideas</a>
+          <a href="#">Refer a Friend</a>
+          <a href="#">Reviews</a>
+          <a href="#">Scholarship</a>
+          <a href="#">Sponsor</a>
+        </div>
+        <div class="section">
+          <h3>Follow Us</h3>
+          <a href="#">Facebook</a>
+          <a href="#">Twitter</a>        
+          <a href="#">Pinterest</a>
+          <a href="#">Blog</a>
+          <a href="#">Ravelry</a>
+          <a href="#">Sponsor</a>
+          <a href="#">RSS</a>
+        </div>
+        <div class="section">
+          <h3>About Us</h3>
+          <a href="#">About</a>
+          <a href="#">Contact us</a>      
+          <a href="#">The Team</a>        
+        </div> 
+        <div class="section cardsec">
+         <a herf="#"><img src="{% static 'img/card_1.jpg' %} "></a>
+         <br>
+         <a herf="#"><img src="{% static 'img/card_2.jpg' %} "></a>
+         <br>
+         <a herf="#"><img src="{% static 'img/card_3.jpg' %} "></a>
+         <br>
+         <a herf="#"><img src="{% static 'img/card_4.jpg' %} "></a>
+          
+        </div>     
+      </div>
+    </div>
+    <div class="legality">
+          © Copyright 2017 Exousia.
+        </div>
+  
+</div>
+</body>
+{% block javascript%}
+
+{% endblock %}
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>

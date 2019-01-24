@@ -1,0 +1,161 @@
+{% extends 'home/base.html'%}
+{% load static from staticfiles%}
+
+{% block content %}
+
+<div class="smooth">
+<div class="container-fluid"> 
+  <div class="row">
+      <div class="nikebrandwall1"> 
+        <img class="img-responsive" src="{{brands.brand_image.url}}">
+        <div class="dropbut">
+        <p>Shop Now</p>
+        <a href="#items">
+          <center><i class="glyphicon glyphicon-menu-down"></i></center>
+        </a></div>
+      </div> 
+  </div>     
+</div>
+<br>
+<center>
+  <div id="items" class="niketext">
+    <h3 style="font-weight:700;">IMPOSSIBLE AIR</h3>
+    <p>Make shoe Contact before eye contact<br> Nike Air  2019 'Space Walk'</p>
+  </div>
+</center>
+
+<br>
+<!--shop/wears/accessories-->
+
+<div  class="container-fluid"> 
+  <h1 style="color: rgb(0, 0, 0); font-family: 'Times New Roman', Times, serif;">Shoes</h1>
+  <div style="border:rgb(73, 73, 73) solid 1px;" class="border"></div>
+  <br>
+  <div class="row">
+        {% for shoe in shoes %}
+                  <div class="col-md-3">
+                      <div class="col-md-12">
+                          <div style="background-color:rgb(255, 255, 255);">
+                           <a href="{% url 'Home:detail' shoe.pk %}"><img class="overlay img-responsive" src="{{ shoe.prod_image.url}}" alt="short"></a>
+                          </div>
+                      <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: bold; 
+                      font-size:25px;"> {{shoe.prodname}}</span>
+                      <br>
+                        <h4>{{shoe.price}}</h4>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                        
+        
+                      </div>
+                    </div>
+      {% endfor %}
+  
+</div>
+</div>
+<br>
+<br>
+<br>
+
+<center>
+  <div class="niketext">
+    <h3 style="font-weight:700;">IMPOSSIBLE AIR</h3>
+    <p>Make shoe Contact before eye contact<br> Nike Air  2019 'Space Walk'</p>
+  </div>
+</center>
+<div class="container-fluid">
+  <h1 style="color: rgb(0, 0, 0); font-family: 'Times New Roman', Times, serif;">Wears</h1>
+  <div style="border:rgb(73, 73, 73) solid 1px;" class="border"></div>
+  <br>
+  <div class="row">
+      {% for wear in wears %}
+                  <div class="col-md-3">
+                      <div class="col-md-12">
+                          <div style="background-color:rgb(255, 255, 255);">
+                           <a href="{% url 'Home:detail' wear.pk %}"><img class="overlay img-responsive" src="{{ wear.prod_image.url}}" alt="short"></a>
+                          </div>
+                      <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: bold; 
+                      font-size:25px;"> {{wear.prodname}}</span>
+                      <br>
+                        <h4>{{wear.price}}</h4>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                        
+        
+                      </div>
+                    </div>
+      {% endfor %}
+  
+</div>
+</div>
+<br>
+<br>
+<br>
+<center>
+  <div class="niketext">
+    <h3 style="font-weight:700;">IMPOSSIBLE AIR</h3>
+    <p>Make shoe Contact before eye contact<br> Nike Air  2019 'Space Walk'</p>
+  </div>
+</center>
+
+<div class="container-fluid">
+    <h1 style="color: rgb(0, 0, 0); font-family: 'Times New Roman', Times, serif;">Accessories</h1>
+    <div style="border:rgb(73, 73, 73) solid 1px;" class="border"></div>
+    <br>
+    <div class="row">
+        {% for access in accessories %}
+                  <div class="col-md-3">
+                      <div class="col-md-12">
+                          <div style="background-color:rgb(255, 255, 255);">
+                           <a href="{% url 'Home:detail' access.pk %}"><img class="overlay img-responsive" src="{{ access.prod_image.url}}" alt="short"></a>
+                          </div>
+                      <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: bold; 
+                      font-size:25px;"> {{access.prodname}}</span>
+                      <br>
+                        <h4>{{access.price}}</h4>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                        
+        
+                      </div>
+                    </div>
+        {% endfor %}
+    
+</div>
+</div>
+<!--/shoes/wears/accessories-->
+<!--<div class="container">
+    <div class="row">
+    
+        <div class="col-md-4">
+            <div class="brandcol">
+                <img src="img/naija.jpg" style="height:100%; width:100%;">
+            </div>
+            
+        </div>
+
+        <div class="col-md-4">
+                <div class="brandcol1">
+                    <img src="img/whiteshoe.jpg" style="height:100%; width:100%;">
+                </div>
+                   
+            </div>
+
+   
+    </div>
+</div>
+-->
+</div>
+
+{% endblock %}

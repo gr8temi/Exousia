@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login
 from django.views.generic import View
 from django.views import generic
 from .models import About
+from django.contrib.auth import get_user_model
 from .forms import SignUpForm
 from home.views import Home
 from Product.views import Prodcat
@@ -13,7 +14,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 
 # Create your views here.
 class Home(generic.TemplateView):
@@ -33,6 +34,7 @@ class UserFormView(View):
 			user= form.save(commit=False)
 			username=form.cleaned_data['username']
 			password= form.cleaned_data['password1']
+			email= form.cleaned_data['email']
 			user.set_password(password)
 			user.is_active = False
 			user.save()
@@ -50,13 +52,14 @@ class UserFormView(View):
 			)
 			email.send()
 			
-			return HttpResponse('Please confirm your email address to complete the registration')
+			return render(request,template_name='account/send.html')
 
 			# user = authenticate(username=username, password=password)
 		else:
 			return render(request, self.template_name, {'form':form},)
 
 def activate(request, uidb64, token):
+	User=get_user_model()
 	try:
 		uid = urlsafe_base64_decode(uidb64).decode()
 		user = User.objects.get(pk=uid)

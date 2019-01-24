@@ -1,48 +1,58 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
+{% extends 'home/base.html'%}
+{% load crispy_forms_tags %}
 {% load static from staticfiles%}
-{% block title %}
-Product
-{% endblock %}
 {% block content %}
-   <div class="container">
-	  <div class="row" style="margin-top: 6%">
+ 
+<nav>
+  <ol class="breadcrumb" style="background-color: orange" >
+    <li class="breadcrumb-item"><a href="{% url 'Home:index' %} ">Home</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'Home:Gender' pk=product.gender.pk %}">{{product.gender.gender}}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'Home:category' pk=product.categories.pk %}">{{product.categories.catname}}</a></li>
+    <li class="breadcrumb-item active">{{product.prodname}}</li>
+  </ol>
+  
+</nav>
+<div class="row" style="background-color: #eeeeee; margin-bottom: 2%;  ">
+    <div class="container" style="margin-top:5%; margin-bottom: 5%" >
+      <div class="row">
+        <div class="col-md-2 col-xs-4">
+          <div class="col-md-12 col-xs-12" id="thumbs">
 
-		<div class="col-sm-8 blog-main">
-
-		  <div class="blog-post">
-			  <div class="row">
-				<div class="card">
-					<div class="card-body">
-						<div class="col-md-6 text-right">
-							<img src="{% if product.prod_image %} {{ product.prod_image.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}" alt="..." style="height: 170px; width: auto">
-						</div>
-						<div class="col-md-6" style="padding-left: 20px">
-							<h3>{{ product.name }}</h3>
-							<h6><a href="">{{ product.category }}</a></h6>
-							<p class="text-muted">Naira. {{ product.price }}</p>
-							<form action="{% url 'cart:cart_add' product.id %}" method="post">
-								{% csrf_token %}
-								{{ cart_product_form }}
-								<input type="submit" value="add to cart" class="btn btn-primary">
-							</form>
-							<p>{{ product.description|safe|linebreaksbr }}</p>
-						</div>
-					</div>
-				</div>
-			  </div>
-
-
-		  </div><!-- /.blog-post -->
-
-		</div><!-- /.blog-main -->
-	  </div><!-- /.row -->
-
-	</div><!-- /.container -->
+            <a href="{{product.prod_image.url}}" class="images" data-img="{{product.prod_image.url}}"  ><img src="{{product.prod_image.url}}" class="thumbnail img-responsive" style="  margin-bottom: 5%;"></a><br>
+            <a href="{{product.frontImage.url}}" class="images" data-img="{{product.frontImage.url}}"><img src="{{product.frontImage.url}}" class="thumbnail img-responsive" style="  margin-bottom: 5%;"></a><br>
+            <a href="{{product.rearImage.url}}" class="images" data-img="{{product.rearImage.url}}" ><img src="{{product.rearImage.url}}" class="thumbnail img-responsive" style="  margin-bottom: 5%;"></a><br>
+          </div>
+        </div>
+        <div class="col-md-6 col-xs-8">
+          <img id="imgs" src="{{product.prod_image.url}}" class="img-thumbnail img-responsive" style=" width: 90%; height: 80%;">
+        </div>
+        <div class="col-xs-3"></div>
+        <div class="col-md-4 col-xs-7">
+            <h3>{{product.prodname}}</h3>
+            <h4>{{product.price}}</h4>
+            <p>{{ product.description|safe|linebreaksbr }}</p>
+            <form class="form-horizontal" action="{% url 'cart:cart_add' product.id %}" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+              {{ item.sizes|as_crispy_field}}
+              {{ item.quantity|as_crispy_field}}
+              <div>
+              {{ item.update|as_crispy_field}}
+                <center><button type="submit" class="btn btn-danger btn-md">Add to Basket</button></center>
+              </div>          
+            </form>
+        </div>
+      </div>
+    </div> 
+</div>
 {% endblock %}
-</body>
-</html>
+{% block javascript%}
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>    
+<script type="text/javascript">
+$('#thumbs').on('click', 'a', function(event) {
+  $('#imgs').attr('src', this.href);
+
+  return false;
+});
+</script>
+{%endblock %}

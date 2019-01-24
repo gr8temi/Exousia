@@ -1,0 +1,82 @@
+{% extends 'home/base.html'%}
+{% load static from staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/w3.css'%}">
+{% block content%}
+<div style="	position: relative;		height: 500px;	width: 100%;">
+      <img class="img-responsive" src="{{gens.gender_image.url}}" style="width:100%; height:500px;">
+      <div class="col-md-6 col-sm-6 col-xs-6 top-left"><h4 style="text-align:left; font-size:90px; font-family: cursive; padding:0px 0px 0px 0px;">{{gens.gender}}</h4>
+		<h2 id="menid" style="text-align:left; font-family: cursive;">{{gens.description}}</h2> 
+      </div>
+      
+    
+</div>
+
+<br>
+<br>  
+<div class="container" >
+  <div class="row" >
+    <div class="col-md-2 col-xs-4" style="border-right:rgb(155, 56, 56) 1px solid;">
+          <h4 style="text-align:center;">Shop by Category</h4>         
+          <div class="list-group" >
+              {% for cate in cat %}
+  <a href="#prod" class="catgend list-group-item" data-cats="{{cate.catname}}" data-gen="{{gens.gender}}" data-sort-url="{% url 'Home:sortcat' cpk=cate.pk %}" >{{cate.catname}}</a>
+{% endfor %}
+            </div>
+    </div>
+<!--<a class="likebutton" id="like{{post.id}}" href="#" data-catid="{{ post.id }}">Like</a>-->
+        <div class="col-md-10 col-xs-8">
+           <div id="products">
+            <div class="progress">
+              <img src="{% static 'img/load.gif' %}">
+            </div>
+            <h3 style="font-weight:bold; font-family: sans-serif; border-bottom: rgb(155, 56, 56) 1px solid;"> All </h3>
+           	{% for pro in product%}
+                  <div class="col-md-4">
+                      <div class="col-md-12">
+                          <div style="background-color:rgb(255, 255, 255);">
+                           <a href="{% url 'Home:detail' pro.pk %}"><img class="overlay img-responsive" src="{{ pro.prod_image.url}}" alt="short"></a>
+                          </div>
+                      <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: bold; 
+                      font-size:25px;"> {{pro.prodname}}</span>
+                      <br>
+                        <h4>{{pro.price}}</h4>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                        
+        
+                      </div>                  
+                  </div>
+             {%endfor%}
+           </div>   
+            </div> 
+          </div>       
+        </div>
+  </div>  
+</div>
+{% endblock%}
+{% block javascript%}
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>    
+<script type="text/javascript">
+  $('.progress').hide();
+  $('.catgend').on('click', function (e) {
+    $('.progress').show()
+    var data = $(this).data()
+    $.ajax({                       
+        url: data.sortUrl,                    
+        data: {
+            'cat': data.cats,
+            'gender': data.gen,     
+        },
+        success: function (data) {   
+            $('#products').html(data);
+            $('.progress').hide()  
+        }
+    });
+    
+});
+</script>
+{%endblock %}

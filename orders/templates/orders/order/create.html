@@ -1,20 +1,25 @@
-{# {% extends 'shop/base.html' %} #}
+{% extends 'home/base.html' %}
 {% load static %}
 {% block title %}
+{% load crispy_forms_tags %}
     Your Shopping Cart| Checkout
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        <div class="row" style="margin-top: 6%">
-            <div class="col-md-8">
+        <div class="container" style="margin-top: 6%">
+            <div class="col-md-4">
                 <h4 class="page-header">Checkout</h4>
-                <form action="." method="post" id="orderForm" data-lga-url="{% url 'load_lga'%}">
+                <form action="." class="form-horizontal" method="post" id="orderForm" data-lga-url="{% url 'load_lga'%}">
                     {% csrf_token %}
-                    {{ form.as_p }}<br>
+                    <div class="form-group">
+                    {{ form|crispy }}
+                    </div>
+
                     <input type="submit" class="btn btn-primary" value="Submit order">
                 </form>
             </div>
+            <div class="col-md-1"></div>
             <div class="col-md-4">
                 <div class="page-header">
                     Your Order
@@ -23,18 +28,18 @@
                     {% for item in cart %}
                         <li class="list-group-item">
                         {{ item.quantity }}x {{ item.product.name }}
-                        <span>Kshs. {{ item.total_price }}</span>
+                        <span>Naira. {{ item.total_price }}</span><span>{{item.sizes}}</span>
                         </li>
                     {% endfor %}
 
-                <li class="list-group-item active">Total Cost: kshs. {{ cart.get_total_price }}</li>
+                <li class="list-group-item active">Total Cost: Naira. {{ cart.get_total_price }}</li>
                 </ul>
 
             </div>
         </div>
     </div>
 {% endblock %}
-
+{% block javascript%}
  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="crossorigin="anonymous"></script>
   <script>
     $("#id_state").change(function () {
@@ -53,3 +58,4 @@
 
     });
   </script>
+  {%endblock%}

@@ -1,0 +1,48 @@
+ {% load static from staticfiles %}
+              {% for cate in cat %}
+  <a href="#" class="catgend" data-cats="{{cate.catname}}" data-gen="{{gens.gender}}" data-sort-url="{% url 'Home:sortcat' cpk=cate.pk %}" >{{cate.catname}}</a>
+{% endfor %}
+              <div id="products">
+{% for pro in product%}
+                  <div class="col-md-4">
+                      <div class="col-md-12">
+                          <div style="background-color:rgb(255, 255, 255); height:280px;">
+                           <a href="{% url 'Home:detail' pro.pk %}"><img class="overlay" src="{{ pro.prod_image.url}}" alt="short" style="width:100%; height:100%;"></a>
+                          </div>
+                      <span style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-weight: bold; 
+                      font-size:25px;"> {{pro.prodname}}</span>
+                      <br>
+                        <h4>{{pro.price}}</h4>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                          <span class="glyphicon glyphicon-star"> </span>
+                        
+        
+                      </div>                  
+                  </div>
+             {%endfor%}
+              </div>
+
+
+
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script type="text/javascript">
+	$('.catgend').on('click', function (e) {
+    $('.progress').show()
+    var data = $(this).data()
+    $.ajax({                       
+        url: data.sortUrl,                    
+        data: {
+            'cat': data.cats,
+            'gender': data.gen,     
+        },
+        success: function (data) {   
+            $('#products').html(data);  
+        }
+    });
+    $('.progress').hide()
+});
+</script>
